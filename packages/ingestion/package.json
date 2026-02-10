@@ -7,7 +7,8 @@
     "dev": "tsx src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test:configuration": "tsx src/test-configuration.ts"
+    "test:configuration": "tsx src/test-configuration.ts",
+    "test:api-client": "tsx src/test-api-client.ts"
   },
   "keywords": ["ingestion", "postgresql", "api"],
   "author": "",

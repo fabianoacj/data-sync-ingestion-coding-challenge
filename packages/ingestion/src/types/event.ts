@@ -15,8 +15,8 @@ export interface Event {
 
 export interface APIResponse {
   data: Event[];
-  hasMore: boolean;
-  nextCursor: string | null;
+  hasMore?: boolean;
+  nextCursor?: string | null;
 }
 
 // ============================================================================
@@ -144,12 +144,18 @@ export class IngestionError extends Error {
 }
 
 export class RateLimitError extends IngestionError {
-  constructor(
-    message: string,
-    public retryAfter: number
-  ) {
+  constructor(message: string, retryAfter: number = 60) {
     super(message, 'RATE_LIMIT', 429, true);
     this.name = 'RateLimitError';
+    this.retryAfter = retryAfter;
+  }
+  retryAfter: number;
+}
+
+export class APIError extends IngestionError {
+  constructor(message: string) {
+    super(message, 'API_ERROR', undefined, true);
+    this.name = 'APIError';
   }
 }
 

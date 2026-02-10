@@ -51,7 +51,7 @@ export class DatabaseService {
       await client.query('SELECT NOW()');
       client.release();
       this.isConnected = true;
-      console.log(' Database connected successfully');
+      console.log('Database connected successfully');
     } catch (error) {
       this.isConnected = false;
       throw new DatabaseError(

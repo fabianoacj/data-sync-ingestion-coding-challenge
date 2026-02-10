@@ -166,14 +166,14 @@ export function validateConfig(config: AppConfig): void {
 
   // Log warnings
   if (warnings.length > 0) {
-    console.warn('  Configuration warnings:');
-    warnings.forEach((warning) => console.warn(`   - ${warning}`));
+    console.warn('Configuration warnings:');
+    warnings.forEach((warning) => console.warn(`  - ${warning}`));
   }
 
   // Throw on errors
   if (errors.length > 0) {
-    console.error(' Configuration errors:');
-    errors.forEach((error) => console.error(`   - ${error}`));
+    console.error('Configuration errors:');
+    errors.forEach((error) => console.error(`  - ${error}`));
     throw new Error('Invalid configuration');
   }
 }

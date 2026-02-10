@@ -44,11 +44,14 @@ docker compose up -d postgres
 
 **Note**: The database tables are created empty. Your application will populate metadata on first run.
 
-### Test Phase 1
+### Test Infrastructure
 
 ```bash
-# Run infrastructure tests
+# Phase 1: Test configuration and database
 npm run test:configuration
+
+# Phase 2: Test API client and pagination
+npm run test:phase2
 ```
 
 ## Configuration
@@ -67,25 +70,46 @@ npm run test:configuration
 
 ### Environment Files
 
-- `.env.local` - Local development with mock API
-- `.env.production` - Production with real API
-- `.env.example` - Template
+- `.env` - Active configuration
+- `.env.example` - Template with documentation
+
+## Implementation Phases
+
+### Phase 0: Mock API Server (Complete)
+Mock API serving 3M events with rate limiting for safe testing.
+
+### Phase 1: Core Infrastructure (Complete)
+- Database schema with deduplication
+- Type definitions and error classes
+- Configuration service
+- Database service with connection pooling
+
+### Phase 2: API Client (Complete)
+- HTTP client with axios
+- Rate limit tracking (100 req/min)
+- Cursor-based pagination
+- Retry logic with exponential backoff
+- Error handling and classification
+
+### Phase 3: Worker Pool (Next)
+- Parallel worker implementation
+- Progress tracking and logging
+- Resumability support
 
 ## Architecture
 
 ```
 src/
 ├── index.ts              # Application entry point
+├── test-configuration.ts # Phase 1 tests
+├── test-phase2.ts        # Phase 2 tests
 ├── services/
-│   ├── config.ts         # Configuration management
-│   ├── database.ts       # Database operations
-│   ├── api-client.ts     # HTTP client (Phase 2)
-│   └── worker-pool.ts    # Parallel workers (Phase 3)
+│   ├── config.ts         # Configuration management (Phase 1)
+│   ├── database.ts       # Database operations (Phase 1)
+│   └── api-client.ts     # HTTP client with pagination (Phase 2)
 ├── types/
 │   └── event.ts          # TypeScript definitions
 └── utils/
-    ├── logger.ts         # Progress tracking (Phase 3)
-    └── retry.ts          # Retry logic (Phase 2)
 ```
 
 ## Database Schema
